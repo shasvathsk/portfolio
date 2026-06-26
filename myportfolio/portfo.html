@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shasvath SK | ECE & Full-Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --bg2: #0d1428;
+    --card: #131c35;
+    --card-hover: #182040;
+    --accent: #4f8ef7;
+    --accent2: #7c3aed;
+    --accent3: #06d6a0;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --border: rgba(79,142,247,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 64px;
+    background: rgba(10,15,30,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 100px 5% 60px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -40%; right: -20%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -20%; left: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    color: var(--accent); letter-spacing: 0.1em; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.2rem;
+  }
+  .hero h1 .line2 {
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 560px; margin-bottom: 2.4rem; line-height: 1.75; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.8rem; background: var(--accent); color: #fff;
+    border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #3a7ae8; transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.8rem; background: transparent; color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
+    font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 3.5rem; flex-wrap: wrap; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--text); }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  section { padding: 90px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 2.5rem; letter-spacing: -0.01em; }
+
+  #skills { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.2rem; }
+  .skill-group { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; transition: border-color 0.2s; }
+  .skill-group:hover { border-color: rgba(79,142,247,0.4); }
+  .skill-group-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.9rem; text-transform: uppercase; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .skill-tag { background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.2); color: var(--text); font-size: 0.8rem; padding: 0.28rem 0.7rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.4rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.7rem;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(79,142,247,0.4); transform: translateY(-3px); background: var(--card-hover); }
+  .project-card:hover::before, .project-card.featured::before { opacity: 0.7; }
+  .project-card.featured { border-color: rgba(79,142,247,0.25); }
+  .project-type {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .type-it { color: var(--accent); }
+  .type-core { color: var(--accent3); }
+  .type-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .type-it .type-dot { background: var(--accent); }
+  .type-core .type-dot { background: var(--accent3); }
+  .project-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.3; }
+  .project-period { font-size: 0.73rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.85rem; }
+  .project-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .stack-tag { font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; background: rgba(6,214,160,0.08); border: 1px solid rgba(6,214,160,0.2); color: var(--accent3); padding: 0.2rem 0.55rem; border-radius: 3px; }
+  .stack-tag.blue { background: rgba(79,142,247,0.08); border-color: rgba(79,142,247,0.2); color: var(--accent); }
+
+  #education { background: var(--bg2); }
+  .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.7rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: border-color 0.2s; }
+  .edu-card:hover { border-color: rgba(79,142,247,0.4); }
+  .edu-icon { width: 44px; height: 44px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .edu-info { flex: 1; }
+  .edu-school { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.97rem; margin-bottom: 0.2rem; }
+  .edu-degree { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .edu-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); }
+  .edu-badge { background: rgba(79,142,247,0.12); border: 1px solid rgba(79,142,247,0.25); color: var(--accent); font-size: 0.73rem; padding: 0.25rem 0.7rem; border-radius: 20px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+
+  .vol-list { display: flex; flex-direction: column; gap: 1rem; }
+  .vol-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.3rem 1.6rem; transition: border-color 0.2s; }
+  .vol-card:hover { border-color: rgba(79,142,247,0.4); }
+  .vol-role { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.15rem; }
+  .vol-org { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.15rem; }
+  .vol-period { font-size: 0.7rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.55rem; }
+  .vol-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+
+  #contact { text-align: center; background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-desc { color: var(--muted); margin-bottom: 2.2rem; font-size: 1rem; line-height: 1.75; }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem; }
+  .contact-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.68rem 1.3rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none; font-size: 0.86rem; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .contact-email-btn { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .contact-email-btn:hover { background: #3a7ae8; border-color: #3a7ae8; color: #fff; }
+
+  footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .hero { padding-top: 80px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.8rem; }
+    .edu-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">Shasvath <span>SK</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#volunteering">Volunteering</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <p class="hero-tag">Final Year ECE · Dr. N.G.P. Institute of Technology</p>
+    <h1>Shasvath SK<br><span class="line2">ECE meets Full‑Stack</span></h1>
+    <p class="hero-sub">
+      Engineering student bridging <strong>hardware & software</strong> — from VLSI memory systems and FPGA design to full-stack web applications built with Java, Spring Boot, and React.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects ↓</a>
+      <a href="https://www.linkedin.com/in/shasvath-sk-30b5b1228/" target="_blank" rel="noopener" class="btn-secondary">LinkedIn ↗</a>
+      <a href="https://github.com/shasvathsk" target="_blank" rel="noopener" class="btn-secondary">GitHub ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8.67<span>/10</span></div>
+        <div class="stat-label">CGPA · 5th Sem</div>
+      </div>
+      <div>
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-tag">// what I work with</p>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <p class="skill-group-title">Frontend</p>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript ES6+</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-title">Backend & Databases</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">SQLite</span>
+          <span class="skill-tag">SQLAlchemy</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-title">Hardware & VLSI</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Verilog HDL</span>
+          <span class="skill-tag">VLSI</span>
+          <span class="skill-tag">Xilinx Vivado</span>
+          <span class="skill-tag">Arduino</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-title">Tools & Platforms</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Git & GitHub</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Tinkercad</span>
+          <span class="skill-tag">Wokwi</span>
+          <span class="skill-tag">Arduino IDE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background: var(--bg);">
+  <div class="section-inner">
+    <p class="section-tag">// things I've built</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+
+      <!-- IT PROJECTS -->
+      <div class="project-card featured reveal">
+        <p class="project-type type-it"><span class="type-dot"></span>IT / Full-Stack</p>
+        <h3 class="project-title">Placement Portal Application</h3>
+        <p class="project-period">IIT Madras · Modern Application Development</p>
+        <p class="project-desc">Full-featured placement management system with role-based access for Students, Companies, and Admins. Session handling, JWT authentication, and authorization throughout. Companies post drives; students apply; admins manage all stakeholders. Complete CRUD with real-time data flow across all three roles.</p>
+        <div class="project-stack">
+          <span class="stack-tag blue">Python</span>
+          <span class="stack-tag blue">Flask</span>
+          <span class="stack-tag blue">SQLite</span>
+          <span class="stack-tag blue">SQLAlchemy</span>
+          <span class="stack-tag blue">HTML</span>
+          <span class="stack-tag blue">RBAC Auth</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-it"><span class="type-dot"></span>IT / Full-Stack</p>
+        <h3 class="project-title">Valentine's Day Web Application</h3>
+        <p class="project-period">Feb 2026 – Mar 2026 · Dr. N.G.P. Institute of Technology</p>
+        <p class="project-desc">Full-stack capstone from a 12-day Java Full Stack Development training. Features a Date Idea Generator, Love Compatibility Checker, and Timer Message Delivery — all backed by a decoupled client-server architecture with RESTful APIs and persistent PostgreSQL storage.</p>
+        <div class="project-stack">
+          <span class="stack-tag blue">React</span>
+          <span class="stack-tag blue">Spring Boot</span>
+          <span class="stack-tag blue">PostgreSQL</span>
+          <span class="stack-tag blue">Java</span>
+          <span class="stack-tag blue">REST API</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-it"><span class="type-dot"></span>IT / IoT</p>
+        <h3 class="project-title">IoT Based Smart Parking System</h3>
+        <p class="project-period">Mar 2024 – Apr 2024 · Dr. N.G.P. Institute of Technology</p>
+        <p class="project-desc">IoT-driven smart parking system that displays real-time slot vacancies through online and manual interfaces. Reduces congestion and time loss by giving users live availability data — no physical searching needed.</p>
+        <div class="project-stack">
+          <span class="stack-tag blue">ESP32</span>
+          <span class="stack-tag blue">Wokwi</span>
+          <span class="stack-tag blue">IoT</span>
+          <span class="stack-tag blue">Real-Time</span>
+        </div>
+      </div>
+
+      <!-- CORE ECE PROJECTS -->
+      <div class="project-card featured reveal">
+        <p class="project-type type-core"><span class="type-dot"></span>Core ECE / VLSI</p>
+        <h3 class="project-title">Memory Error Correction — Syndrome-Driven Adaptive Bit Flipping</h3>
+        <p class="project-period">Feb 2026 – Apr 2026 · Dr. N.G.P. Institute of Technology</p>
+        <p class="project-desc">Designed and simulated a low-power memory error correction system using Syndrome-Driven Adaptive Bit-Flipping (ABF). Detects and corrects soft errors from radiation, electrical noise, and voltage fluctuations. Reduces hardware complexity vs. conventional LDPC methods. Implemented in Verilog HDL, simulated in AMD Xilinx Vivado 2022.2.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Verilog HDL</span>
+          <span class="stack-tag">VLSI</span>
+          <span class="stack-tag">Xilinx Vivado</span>
+          <span class="stack-tag">FPGA</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-core"><span class="type-dot"></span>Core ECE / DSP</p>
+        <h3 class="project-title">FIR Filter — Wallace Tree Multiplier & Carry Save Adder</h3>
+        <p class="project-period">Jul 2025 · NIT Trichy Internship</p>
+        <p class="project-desc">Mini-project in digital signal processing hardware from an NIT Trichy internship. Designed and implemented an FIR filter using Wallace Tree Multiplier and Carry-Save Adder for high-speed computation. Validated in Vivado measuring power, delay, and area. Application: real-time audio processing systems.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Xilinx Vivado</span>
+          <span class="stack-tag">VLSI</span>
+          <span class="stack-tag">Verilog</span>
+          <span class="stack-tag">DSP</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-core"><span class="type-dot"></span>Core ECE / Renewable Energy</p>
+        <h3 class="project-title">SunAlign — Intelligent Solar Tracking & Reconfiguration System</h3>
+        <p class="project-period">Mar 2025 – May 2025</p>
+        <p class="project-desc">Smart solar energy optimization system that tracks the sun's position and reconfigures panel connections in real time. Dual approach: mechanical alignment via LDR sensors + motorized tracking, and automatic Series/Parallel switching during shading conditions for maximum power extraction.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Embedded Systems</span>
+          <span class="stack-tag">Arduino IDE</span>
+          <span class="stack-tag">LDR Sensors</span>
+          <span class="stack-tag">IoT</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-core"><span class="type-dot"></span>Core ECE / Road Safety</p>
+        <h3 class="project-title">Smart Driving Pattern Analyser — SIH</h3>
+        <p class="project-period">Nov 2023 · Smart India Hackathon</p>
+        <p class="project-desc">Road safety system built for Smart India Hackathon. Continuously measures real-time vehicle distance using ultrasonic sensors, compares it against the RTO-mandated 2-second stopping rule, and alerts the driver with visual and auditory warnings upon a threshold breach. Built with Arduino + Adafruit IO.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Arduino</span>
+          <span class="stack-tag">Adafruit IO</span>
+          <span class="stack-tag">C</span>
+          <span class="stack-tag">Ultrasonic Sensors</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-type type-core"><span class="type-dot"></span>Core ECE / Automation</p>
+        <h3 class="project-title">Smart Water Level Monitoring System</h3>
+        <p class="project-period">Dr. N.G.P. Institute of Technology</p>
+        <p class="project-desc">Automates tank water management with an ultrasonic sensor. Activates motor below 10% capacity; deactivates above 90% — preventing overflow and dry running. Displays real-time levels on an LCD. Fully automated, scalable from household tanks to industrial water storage systems.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Autodesk Tinkercad</span>
+          <span class="stack-tag">Consumer Electronics</span>
+          <span class="stack-tag">IoT</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-inner">
+    <p class="section-tag">// academic background</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-list">
+      <div class="edu-card reveal">
+        <div class="edu-icon">🏛️</div>
+        <div class="edu-info">
+          <p class="edu-school">Dr. N.G.P. Institute of Technology</p>
+          <p class="edu-degree">Bachelor of Engineering — Electrical, Electronics & Communications (ECE)</p>
+          <p class="edu-meta">Apr 2023 – Apr 2027 &nbsp;·&nbsp; Final Year</p>
+        </div>
+        <span class="edu-badge">CGPA 8.67</span>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-info">
+          <p class="edu-school">Indian Institute of Technology, Madras</p>
+          <p class="edu-degree">Foundation Degree in Data Science &nbsp;·&nbsp; Foundation Course Certificate</p>
+          <p class="edu-meta">May 2023 – Jun 2024</p>
+        </div>
+        <span class="edu-badge">IIT Madras</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="volunteering" style="background: var(--bg2);">
+  <div class="section-inner">
+    <p class="section-tag">// community</p>
+    <h2 class="section-title">Volunteering</h2>
+    <div class="vol-list">
+      <div class="vol-card reveal">
+        <p class="vol-role">Event Volunteer — Pentastic</p>
+        <p class="vol-org">Dr. N.G.P. Institute of Technology</p>
+        <p class="vol-period">Mar 2024 – Present &nbsp;·&nbsp; Social Services</p>
+        <p class="vol-desc">Organised and managed the Pentastic event at the Techno-Cultural Fest (Henosis 2k24), contributing to one of the college's most successful event runs.</p>
+      </div>
+      <div class="vol-card reveal">
+        <p class="vol-role">Class Committee Member</p>
+        <p class="vol-org">Dr. N.G.P. Institute of Technology</p>
+        <p class="vol-period">Sep 2023 – Feb 2024 &nbsp;·&nbsp; 6 months &nbsp;·&nbsp; Education</p>
+        <p class="vol-desc">Served as a Class Committee Member, bridging communication between students and faculty for an entire semester.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner contact-inner">
+    <p class="section-tag">// get in touch</p>
+    <h2 class="section-title">Let's Connect</h2>
+    <p class="contact-desc">
+      Final year ECE student open to full-time roles, internships, and interesting collaborations — in software, embedded systems, or anywhere the two meet.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:cps.shasvath123@gmail.com" class="contact-link contact-email-btn">✉ cps.shasvath123@gmail.com</a>
+      <a href="tel:+916382182286" class="contact-link">📞 +91 63821 82286</a>
+      <a href="https://www.linkedin.com/in/shasvath-sk-30b5b1228/" target="_blank" rel="noopener" class="contact-link">LinkedIn ↗</a>
+      <a href="https://github.com/shasvathsk" target="_blank" rel="noopener" class="contact-link">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Shasvath SK &nbsp;·&nbsp; Built for recruiters, not templates.</p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
